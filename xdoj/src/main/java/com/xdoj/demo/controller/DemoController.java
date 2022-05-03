@@ -3,6 +3,7 @@ package com.xdoj.demo.controller;
 import com.xdoj.demo.result.CodeMsg;
 import com.xdoj.demo.result.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,5 +20,11 @@ public class DemoController {
     @ResponseBody
     public Result<String> helloError(){
         return Result.error(CodeMsg.SERVER_ERROR);
+    }
+
+    @RequestMapping("/th")
+    public String th(Model model){
+        model.addAttribute("name", "yuanzuo");
+        return "hello";
     }
 }
