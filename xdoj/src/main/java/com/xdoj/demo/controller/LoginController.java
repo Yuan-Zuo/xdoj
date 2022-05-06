@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -30,21 +32,19 @@ public class LoginController {
 
     @RequestMapping("/do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(LoginVo loginVo){
+    public Result<Boolean> doLogin(@Valid LoginVo loginVo){
         log.info(loginVo.toString());
-        String mobile = loginVo.getMobile();
-        String password = loginVo.getPassword();
-        if(StringUtils.isEmpty(password)){
-            return Result.error(CodeMsg.PASSWORD_EMPTY);
-        }
-        if(StringUtils.isEmpty(mobile)){
-            return Result.error(CodeMsg.MOBILE_EMPTY);
-        }
-        if(!ValidatorUtil.isMobile(mobile)){
-            return Result.error(CodeMsg.MOBILE_ERROR);
-        }
-        //登录
-
+//        String mobile = loginVo.getMobile();
+//        String password = loginVo.getPassword();
+//        if(StringUtils.isEmpty(password)){
+//            return Result.error(CodeMsg.PASSWORD_EMPTY);
+//        }
+//        if(StringUtils.isEmpty(mobile)){
+//            return Result.error(CodeMsg.MOBILE_EMPTY);
+//        }
+//        if(!ValidatorUtil.isMobile(mobile)){
+//            return Result.error(CodeMsg.MOBILE_ERROR);
+//        }
         CodeMsg cw = userService.login(loginVo);
         if(cw.getCode() == 0){
             return Result.success(true);
