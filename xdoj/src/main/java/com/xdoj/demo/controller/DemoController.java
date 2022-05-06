@@ -34,8 +34,6 @@ public class DemoController {
     @ResponseBody
     public Result<Boolean> helloError(){
 
-        userService.insert();
-
         return Result.success(true);
     }
 
