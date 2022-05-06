@@ -32,25 +32,9 @@ public class LoginController {
 
     @RequestMapping("/do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(@Valid LoginVo loginVo){
+    public Boolean doLogin(@Valid LoginVo loginVo){
         log.info(loginVo.toString());
-//        String mobile = loginVo.getMobile();
-//        String password = loginVo.getPassword();
-//        if(StringUtils.isEmpty(password)){
-//            return Result.error(CodeMsg.PASSWORD_EMPTY);
-//        }
-//        if(StringUtils.isEmpty(mobile)){
-//            return Result.error(CodeMsg.MOBILE_EMPTY);
-//        }
-//        if(!ValidatorUtil.isMobile(mobile)){
-//            return Result.error(CodeMsg.MOBILE_ERROR);
-//        }
-        CodeMsg cw = userService.login(loginVo);
-        if(cw.getCode() == 0){
-            return Result.success(true);
-        }else {
-            return Result.error(cw);
-        }
-
+        userService.login(loginVo);
+        return true;
     }
 }
