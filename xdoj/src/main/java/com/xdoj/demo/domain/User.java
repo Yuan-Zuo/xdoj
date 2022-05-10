@@ -77,5 +77,17 @@ public class User {
     private Date last_login_date;
     private int login_count;
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nickName='" + nickName + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", head=" + head +
+                ", register_date=" + register_date +
+                ", last_login_date=" + last_login_date +
+                ", login_count=" + login_count +
+                '}';
+    }
 }

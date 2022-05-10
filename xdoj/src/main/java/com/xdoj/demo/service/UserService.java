@@ -4,10 +4,13 @@ import com.xdoj.demo.dao.UserDao;
 import com.xdoj.demo.domain.User;
 import com.xdoj.demo.exception.GlobalException;
 import com.xdoj.demo.result.CodeMsg;
+import com.xdoj.demo.util.UUIDUtil;
 import com.xdoj.demo.vo.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -34,5 +37,14 @@ public class UserService {
         if(!dbPassword.equals(password)){
             throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }
+        //登录成功
+        //生成cookie
+        String token = UUIDUtil.uuid();
     }
+
+    public User test(){
+        List<User> list = userDao.queryUserList();
+        return list.get(0);
+    }
+
 }

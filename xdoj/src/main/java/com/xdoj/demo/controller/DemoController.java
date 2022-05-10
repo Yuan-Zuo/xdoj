@@ -1,6 +1,8 @@
 package com.xdoj.demo.controller;
 
 import com.xdoj.demo.domain.User;
+import com.xdoj.demo.redis.RedisService;
+import com.xdoj.demo.redis.UserKey;
 import com.xdoj.demo.result.CodeMsg;
 import com.xdoj.demo.result.Result;
 import com.xdoj.demo.service.UserService;
@@ -18,6 +20,9 @@ public class DemoController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    RedisService redisService;
+
     @RequestMapping("/hello")
     @ResponseBody
     public Result<String> hello(){
@@ -27,7 +32,7 @@ public class DemoController {
     @RequestMapping("/db/get")
     @ResponseBody
     public Result<User> getById(){
-        return Result.success(userService.getById(1));
+        return Result.success(userService.getById(19030100339L));
     }
 
     @RequestMapping("/db/tx")
@@ -41,5 +46,24 @@ public class DemoController {
     public String th(Model model){
         model.addAttribute("name", "yuanzuo");
         return "hello";
+    }
+
+    @RequestMapping("/redis/get")
+    @ResponseBody
+    public Result<User> redisGet(){
+        User user = redisService.get(UserKey.getById, 1 + "", User.class);
+        return Result.success(user);
+    }
+
+//    key1 key2大家都用的话容易覆盖 // 加上 每个人的前缀就好了
+    @RequestMapping("/redis/set")
+    @ResponseBody
+    public Result<User> redisSet(){
+        User user = new User();
+        user.setId(1);
+        user.setPassword("123456");
+        redisService.set(UserKey.getById,"2", user);
+        String str = redisService.get(UserKey.getById,"2", String.class);
+        return Result.success(user);
     }
 }
