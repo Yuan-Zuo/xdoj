@@ -1,28 +1,41 @@
 package com.xdoj.demo.service;
 
+import com.xdoj.demo.controller.LoginController;
 import com.xdoj.demo.dao.UserDao;
 import com.xdoj.demo.domain.User;
 import com.xdoj.demo.exception.GlobalException;
+import com.xdoj.demo.redis.RedisService;
+import com.xdoj.demo.redis.UserKey;
 import com.xdoj.demo.result.CodeMsg;
 import com.xdoj.demo.util.UUIDUtil;
 import com.xdoj.demo.vo.LoginVo;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service
 public class UserService {
 
+    private static Logger log = LoggerFactory.getLogger(LoginController.class);
+    public static final String COOKIE_NAME_TOKEN = "token";
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    RedisService redisService;
 
     public User getById(long id) {
         return userDao.getById(id);
     }
 
-    public void login(LoginVo loginVo) {
+    public void login(HttpServletResponse response, LoginVo loginVo) {
         if(loginVo == null){
             throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
@@ -40,11 +53,20 @@ public class UserService {
         //登录成功
         //生成cookie
         String token = UUIDUtil.uuid();
+        log.info(token);
+        redisService.set(UserKey.token, token, user);
+        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
+        //设置cookie 有效期 和 redis 过期时间一致
+        cookie.setMaxAge(UserKey.token.expireSecond());
+//        因此cookie.setPath("/");之后，可以在webapp文件夹下的所有应用共享cookie，
+//        而cookie.setPath("/webapp_b/")是指设置的cookie只能在webapp_b应用下的获得，
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 
-    public User test(){
-        List<User> list = userDao.queryUserList();
-        return list.get(0);
+//    public 方法第一步要进行参数校验
+    public User getByToken(String token) {
+        if(StringUtils.isEmpty(token))return  null;
+        return redisService.get(UserKey.token, token, User.class);
     }
-
 }

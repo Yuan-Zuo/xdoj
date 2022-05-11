@@ -51,7 +51,7 @@ public class DemoController {
     @RequestMapping("/redis/get")
     @ResponseBody
     public Result<User> redisGet(){
-        User user = redisService.get(UserKey.getById, 1 + "", User.class);
+        User user = redisService.get(UserKey.token, 1 + "", User.class);
         return Result.success(user);
     }
 
@@ -62,8 +62,8 @@ public class DemoController {
         User user = new User();
         user.setId(1);
         user.setPassword("123456");
-        redisService.set(UserKey.getById,"2", user);
-        String str = redisService.get(UserKey.getById,"2", String.class);
+        redisService.set(UserKey.token,"2", user);
+        String str = redisService.get(UserKey.token,"2", String.class);
         return Result.success(user);
     }
 }

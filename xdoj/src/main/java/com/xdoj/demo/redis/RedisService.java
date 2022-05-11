@@ -39,7 +39,7 @@ public class RedisService {
             if(seconds <= 0){
                 jedis.set(realKey, str);
             }else {
-                jedis.setex(realKey, seconds,str);
+                jedis.setex(realKey,seconds,str);
             }
             return true;
         }finally {
