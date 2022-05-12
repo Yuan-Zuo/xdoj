@@ -29,14 +29,7 @@ public class GoodsController {
     UserService userService;
 
     @RequestMapping("/to_list")
-    public String toLogin(Model model,
-                          @CookieValue(value=UserService.COOKIE_NAME_TOKEN, required = false) String cookieToken){
-        if(StringUtils.isEmpty(cookieToken)){
-            return "login";
-        }
-        String token =  cookieToken;
-        User user = userService.getByToken(token);
-        log.info(user.toString());
+    public String toLogin(Model model, User user){
         model.addAttribute(user);
         return "goods_list";
     }

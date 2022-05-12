@@ -50,6 +50,24 @@ public class UserService {
         if(!dbPassword.equals(password)){
             throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }
+        addCookie(response, user);
+    }
+
+//    public 方法第一步要进行参数校验
+//    更新cookie时间 : 设置一个新cookie
+    public User getByToken(HttpServletResponse response, String token) {
+        if(StringUtils.isEmpty(token)){
+            return null;
+        }
+        User user = redisService.get(UserKey.token, token, User.class);
+//        延长有效期
+        if(user != null){
+            addCookie(response, user);
+        }
+        return user;
+    }
+
+    private void addCookie(HttpServletResponse response, User user){
         //登录成功
         //生成cookie
         String token = UUIDUtil.uuid();
@@ -58,15 +76,10 @@ public class UserService {
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         //设置cookie 有效期 和 redis 过期时间一致
         cookie.setMaxAge(UserKey.token.expireSecond());
+        //显示cookie生命周期
 //        因此cookie.setPath("/");之后，可以在webapp文件夹下的所有应用共享cookie，
 //        而cookie.setPath("/webapp_b/")是指设置的cookie只能在webapp_b应用下的获得，
         cookie.setPath("/");
         response.addCookie(cookie);
-    }
-
-//    public 方法第一步要进行参数校验
-    public User getByToken(String token) {
-        if(StringUtils.isEmpty(token))return  null;
-        return redisService.get(UserKey.token, token, User.class);
     }
 }
