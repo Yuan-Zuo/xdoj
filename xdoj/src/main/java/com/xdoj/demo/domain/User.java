@@ -6,7 +6,20 @@ public class User {
     private long id;
     private String nickName;
     private String password;
-    private String salt;
+    private long head;
+    private Date register_date ;
+    private Date last_login_date;
+    private int login_count;
+    private String isAdministrator;
+
+    public String getIsAdministrator() {
+        return isAdministrator;
+    }
+
+    public void setIsAdministrator(String isAdministrator) {
+        this.isAdministrator = isAdministrator;
+    }
+
 
     public long getId() {
         return id;
@@ -30,14 +43,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     public long getHead() {
@@ -72,22 +77,17 @@ public class User {
         this.login_count = login_count;
     }
 
-    private long head;
-    private Date register_date ;
-    private Date last_login_date;
-    private int login_count;
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", nickName='" + nickName + '\'' +
                 ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
                 ", head=" + head +
                 ", register_date=" + register_date +
                 ", last_login_date=" + last_login_date +
                 ", login_count=" + login_count +
+                ", isAdministrator='" + isAdministrator + '\'' +
                 '}';
     }
 }

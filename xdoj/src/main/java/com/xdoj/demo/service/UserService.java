@@ -50,7 +50,9 @@ public class UserService {
         if(!dbPassword.equals(password)){
             throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }
-        addCookie(response, user);
+
+        String token = UUIDUtil.uuid();
+        addCookie(response, token,user);
     }
 
 //    public 方法第一步要进行参数校验
@@ -62,15 +64,13 @@ public class UserService {
         User user = redisService.get(UserKey.token, token, User.class);
 //        延长有效期
         if(user != null){
-            addCookie(response, user);
+            addCookie(response,token,user);
         }
         return user;
     }
 
-    private void addCookie(HttpServletResponse response, User user){
-        //登录成功
+    private void addCookie(HttpServletResponse response, String token ,User user){
         //生成cookie
-        String token = UUIDUtil.uuid();
         log.info(token);
         redisService.set(UserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
