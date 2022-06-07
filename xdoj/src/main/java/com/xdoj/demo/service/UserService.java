@@ -31,8 +31,24 @@ public class UserService {
     @Autowired
     RedisService redisService;
 
-    public User getById(long id) {
+    private User getById(long id) {
         return userDao.getById(id);
+    }
+
+    private boolean registerUser(LoginVo loginVo){
+        return userDao.registerUser(loginVo);
+    }
+
+    public void register(HttpServletResponse response, LoginVo loginVo) {
+        if(loginVo == null){
+            throw new GlobalException(CodeMsg.REGISTER_ERROR);
+        }
+        String mobile = loginVo.getMobile();
+        User user = getById(Long.parseLong(mobile));
+        if(user != null){
+            throw new GlobalException(CodeMsg.USER_EXIST_ERROR);
+        }
+        registerUser(loginVo);
     }
 
     public void login(HttpServletResponse response, LoginVo loginVo) {
@@ -82,4 +98,6 @@ public class UserService {
         cookie.setPath("/");
         response.addCookie(cookie);
     }
+
+
 }

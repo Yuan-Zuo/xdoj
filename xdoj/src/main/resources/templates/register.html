@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>登录</title>
+    <title>注册</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
     <!-- jquery -->
@@ -24,7 +24,7 @@
 
 <form name="loginForm" id="loginForm" method="post"  style="width:50%; margin:0 auto">
 
-	<h2 style="text-align:center; margin-bottom: 20px">用户登录</h2>
+	<h2 style="text-align:center; margin-bottom: 20px">用户注册</h2>
 	
 	<div class="form-group">
        	<div class="row">
@@ -51,27 +51,22 @@
 	       	 		<button class="btn btn-primary btn-block" type="reset" onclick="reset()">重置</button>
 	       	 	</div>
 	       	 	<div class="col-md-5">
-	       	 		<button class="btn btn-primary btn-block" type="submit" onclick="login()">登录</button>
+	       	 		<button class="btn btn-primary btn-block" type="submit" onclick="register()">注册</button>
 	       	 	</div>
-
-				<div class="col-md-5">
-					<a class="btn btn-sm btn-success" href="/login/to_register" th:href="@{/login/to_register}">注册</a>
-				</div>
 	 </div>
 	 
 </form>
 </body>
 
 <script>
-
-function login(){
+function register(){
 	$("#loginForm").validate({
         submitHandler:function(form){
-             doLogin();
+             doRegister();
         }    
     });
 }
-function doLogin(){
+function doRegister(){
 
 	g_showLoading();
 	var inputPass = $("#password").val();
@@ -80,7 +75,7 @@ function doLogin(){
 	var password = md5(str);
 	
 	$.ajax({
-		url: "/login/do_login",
+		url: "/login/do_register",
 	    type: "POST",
 	    data:{
 	    	mobile:$("#mobile").val(),
@@ -90,7 +85,7 @@ function doLogin(){
 	    	layer.closeAll();
 	    	if(data.code == 0){
 	    		layer.msg("成功");
-	    		window.location.href="/goods/to_list";
+	    		window.location.href="/login/to_login";
 	    	}else{
 	    		layer.msg(data.msg);
 	    	}

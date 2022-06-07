@@ -1,6 +1,7 @@
 package com.xdoj.demo.result;
 
 public class CodeMsg {
+
     private int code;
     private String msg;
 
@@ -14,6 +15,9 @@ public class CodeMsg {
     //登录模块异常 5002xx
     public static CodeMsg PASSWORD_EMPTY = new CodeMsg(500201, "密码不能为空");
     public static CodeMsg MOBILE_EMPTY = new CodeMsg(500202, "手机号不能为空");
+    public static CodeMsg REGISTER_ERROR = new CodeMsg(500203,"注册信息不能为空");
+    public static CodeMsg REGISTER_FAILED = new CodeMsg(500204,"注册失败请重试");
+    public static CodeMsg USER_EXIST_ERROR = new CodeMsg(500205,"用户已存在");
     public static CodeMsg MOBILE_ERROR = new CodeMsg(500203, "手机号错误");
     public static CodeMsg MOBILE_NOT_EXIST = new CodeMsg(500204,"用户不存在");
     public static CodeMsg PASSWORD_ERROR = new CodeMsg(500205, "密码错误");

@@ -29,11 +29,11 @@ public class DemoController {
         return Result.success("hello,imooc");
     }
 
-    @RequestMapping("/db/get")
-    @ResponseBody
-    public Result<User> getById(){
-        return Result.success(userService.getById(19030100339L));
-    }
+//    @RequestMapping("/db/get")
+//    @ResponseBody
+//    public Result<User> getById(){
+//        return Result.success(userService.getById(19030100339L));
+//    }
 
     @RequestMapping("/db/tx")
     @ResponseBody

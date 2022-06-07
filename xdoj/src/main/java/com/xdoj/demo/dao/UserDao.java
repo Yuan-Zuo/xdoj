@@ -1,6 +1,7 @@
 package com.xdoj.demo.dao;
 
 import com.xdoj.demo.domain.User;
+import com.xdoj.demo.vo.LoginVo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,6 @@ public interface UserDao {
 
     public List<User> queryUserList();
 
+    @Insert("insert into user (id, password) values(#{mobile}, #{password})")
+    boolean registerUser( LoginVo loginVo);
 }

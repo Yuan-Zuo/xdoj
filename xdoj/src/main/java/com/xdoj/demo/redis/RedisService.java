@@ -54,7 +54,6 @@ public class RedisService {
             jedis = jedisPool.getResource();
             String realKey = prefix.getPrefix() + key;
             return jedis.exists(realKey);
-
         }finally {
             returnToPool(jedis);
         }

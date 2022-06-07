@@ -19,12 +19,13 @@ public class GlobalExceptionHandler {
 
     //拦截所有异常
     //HttpServletRequest 对象专门用于封装 HTTP 请求消息
-    @ExceptionHandler(value = BindException.class)
+    @ExceptionHandler(value = Exception.class)
     public Result<String> exception(HttpServletRequest request, Exception e){
         e.printStackTrace();
 //      instanceof是Java中的二元运算符，左边是对象，右边是类；当对象是右边类或子类所创建对象时，返回true；否则，返回false。
         if(e instanceof GlobalException){
             GlobalException ex = (GlobalException) e;
+            System.out.println("GlobalException");
             return Result.error(ex.getCm());
         }else if(e instanceof BindException){
             BindException ex = (BindException) e;

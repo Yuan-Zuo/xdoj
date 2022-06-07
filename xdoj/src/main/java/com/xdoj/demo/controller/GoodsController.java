@@ -30,7 +30,7 @@ public class GoodsController {
 
     @RequestMapping("/to_list")
     public String toLogin(Model model, User user){
-        model.addAttribute(user);
+//        model.addAttribute(user);
         return "goods_list";
     }
 
