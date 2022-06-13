@@ -26,7 +26,7 @@ public class CodeMsg {
     //注册模块 5004xx
 
     //添加题目模块 5005xx
-
+    public static CodeMsg QUESTION_EMPTY = new CodeMsg(500505, "题目不能为空");
     //
 
     public CodeMsg(int code, String msg) {

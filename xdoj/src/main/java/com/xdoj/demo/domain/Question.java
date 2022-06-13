@@ -1,9 +1,18 @@
 package com.xdoj.demo.domain;
 
-public class QuestionDetail {
+public class Question {
     private  long questionId;
     private String difficultLevel;
-    private long administratorId;
+
+    private String questionContent;
+
+    public String getQuestionContent() {
+        return questionContent;
+    }
+
+    public void setQuestionContent(String questionContent) {
+        this.questionContent = questionContent;
+    }
 
     public long getQuestionId() {
         return questionId;
@@ -21,11 +30,4 @@ public class QuestionDetail {
         this.difficultLevel = difficultLevel;
     }
 
-    public long getAdministratorId() {
-        return administratorId;
-    }
-
-    public void setAdministratorId(long administratorId) {
-        this.administratorId = administratorId;
-    }
 }
