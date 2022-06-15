@@ -3,9 +3,7 @@ package com.xdoj.demo.vo;
 public class QuestionListVo {
     private  long questionId;
     private String questionName;
-
     private String difficultLevel;
-
     public String getDifficultLevel() {
         return difficultLevel;
     }

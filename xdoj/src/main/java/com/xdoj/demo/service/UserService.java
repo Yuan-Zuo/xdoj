@@ -23,6 +23,8 @@ public class UserService {
 
     private static Logger log = LoggerFactory.getLogger(LoginController.class);
     public static final String COOKIE_NAME_TOKEN = "token";
+
+    public static final String yes = "yes";
     @Autowired
     UserDao userDao;
 
@@ -49,7 +51,7 @@ public class UserService {
         registerUser(loginVo);
     }
 
-    public void login(HttpServletResponse response, LoginVo loginVo) {
+    public boolean login(HttpServletResponse response, LoginVo loginVo) {
         if(loginVo == null){
             throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
@@ -65,8 +67,12 @@ public class UserService {
             throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }
 
+        boolean isAdmin = user.getIsAdministrator().equals(yes);
+
         String token = UUIDUtil.uuid();
         addCookie(response, token,user);
+
+        return isAdmin;
     }
 
 //    public 方法第一步要进行参数校验

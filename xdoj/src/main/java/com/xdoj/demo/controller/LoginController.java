@@ -34,10 +34,10 @@ public class LoginController {
 
     @RequestMapping("/do_login")
     @ResponseBody
-    public Result<String> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
+    public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
         log.info(loginVo.toString());
-        userService.login(response, loginVo);
-        return Result.success("成功");
+        boolean isAdmin = userService.login(response, loginVo);
+        return Result.success(isAdmin);
     }
 
     @PostMapping("/do_register")
