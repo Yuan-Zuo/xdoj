@@ -11,19 +11,19 @@ import java.util.List;
 @Repository
 public interface UserDao {
 
-    @Select("select * from user where id = #{id}")
+    @Select("select * from user where user_id = #{id}")
     public User getById(@Param("id") long id);
 
-    @Insert("insert into user(id, nickName)values(#{id}, #{nickName}")
+    @Insert("insert into user(user_id, nickName)values(#{id}, #{nickName}")
     public void insert(User user);
 
-    @Delete("delete from uer where id = #{id}")
+    @Delete("delete from uer where user_id = #{id}")
     public void deleteById(@Param("id") long id);
 
     public void updateById(User user);
 
     public List<User> queryUserList();
 
-    @Insert("insert into user (id, password) values(#{mobile}, #{password})")
+    @Insert("insert into user (user_id, password) values(#{mobile}, #{password})")
     boolean registerUser( LoginVo loginVo);
 }

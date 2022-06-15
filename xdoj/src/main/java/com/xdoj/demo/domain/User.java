@@ -3,7 +3,7 @@ package com.xdoj.demo.domain;
 import java.util.Date;
 
 public class User {
-    private long id;
+    private long userId;
     private String nickName;
     private String password;
     private long head;
@@ -20,13 +20,12 @@ public class User {
         this.isAdministrator = isAdministrator;
     }
 
-
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getNickName() {
@@ -80,7 +79,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "userId=" + userId +
                 ", nickName='" + nickName + '\'' +
                 ", password='" + password + '\'' +
                 ", head=" + head +
